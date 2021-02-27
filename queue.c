@@ -122,7 +122,7 @@ bool q_insert_tail(queue_t *q, char *s)
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
     /* TODO: You need to fix up this code. */
-    if (sp == NULL)
+    if (q == NULL || q->head == NULL)
         return false;
 
     if (bufsize > strlen(q->head->value)) {
@@ -136,6 +136,7 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     // Free allocated memory
     list_ele_t *tmp = q->head;
     q->head = q->head->next;
+    tmp->next = NULL;
     free(tmp->value);
     free(tmp);
 
