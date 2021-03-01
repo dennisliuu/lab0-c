@@ -65,6 +65,7 @@ bool q_insert_head(queue_t *q, char *s)
         return false;
     /* Don't forget to allocate space for the string and copy it */
     /* What if either call to malloc returns NULL? */
+    /* allocate string size is default to srtlen() + 1 */
     char *tmp = malloc(sizeof(char) * strlen(s) + 1);
     if (tmp == NULL) {
         free(newh);
@@ -139,9 +140,11 @@ bool q_insert_tail(queue_t *q, char *s)
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
     /* TODO: You need to fix up this code. */
+    /* Check if queue is empty and sp has enough size for tmp as buffer */
     if (q == NULL || q->head == NULL || sp == NULL)
         return false;
 
+    /* Copy data into sp, and adjust the pointer */
     if (bufsize > strlen(q->head->value)) {
         strncpy(sp, q->head->value, strlen(q->head->value));
         sp[strlen(q->head->value)] = '\0';
@@ -209,6 +212,10 @@ void q_reverse(queue_t *q)
     q->head = cur;
 }
 
+/*----------------------------------------------------------------*/
+/* Merge sort of linked list: https://npes87184.github.io/2015-09-12-linkedListSort/ */
+/* Merge sort complexity: O(nlogn), quick sort could be O(n^2)
+/*----------------------------------------------------------------*/
 void merge_sorted_list(list_ele_t *a, list_ele_t *b, list_ele_t **tmp)
 {
     while (a && b) {
