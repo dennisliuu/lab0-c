@@ -38,6 +38,7 @@ void q_free(queue_t *q)
     while (q->head != NULL) {
         list_ele_t *tmp = q->head;
         q->head = q->head->next;
+
         free(tmp->value);
         free(tmp);
     }
@@ -54,6 +55,9 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
+    if (q == NULL)
+        return false;
+
     list_ele_t *newh;
     /* TODO: What should you do if the q is NULL? */
     newh = malloc(sizeof(list_ele_t));
